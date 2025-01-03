@@ -89,29 +89,34 @@ def handle_client(client, username):
 # 接收新的连接并处理登录
 def receive_connections():
     while True:
-        client, _ = server_socket.accept()
-        print("New connection established.")
+        try:
+            client, _ = server_socket.accept()
+            print("New connection established.")
 
-        # 登录流程
-        client.send("USERNAME".encode())
-        username = client.recv(1024).decode().strip()
+            # 登录流程
+            client.send("USERNAME".encode())
+            username = client.recv(1024).decode().strip()
 
-        client.send("PASSWORD".encode())
-        password = client.recv(1024).decode().strip()
+            client.send("PASSWORD".encode())
+            password = client.recv(1024).decode().strip()
 
-        # 登录验证
-        if username in LOGIN_CREDENTIALS and LOGIN_CREDENTIALS[username] == password:
-            client.send("SUCCESS".encode())
-            usernames.append(username)
-            clients.append(client)
-            broadcast(f"{username} has joined the chat!")
-            print(f"{username} logged in.")
+            # 登录验证
+            if username in LOGIN_CREDENTIALS and LOGIN_CREDENTIALS[username] == password:
+                client.send("SUCCESS".encode())
+                usernames.append(username)
+                clients.append(client)
+                broadcast(f"{username} has joined the chat!")
+                print(f"{username} logged in.")
 
-            thread = threading.Thread(target=handle_client, args=(client, username))
-            thread.start()
-        else:
-            client.send("FAIL".encode())
-            client.close()
+                thread = threading.Thread(target=handle_client, args=(client, username))
+                thread.start()
+            else:
+                client.send("FAIL".encode())
+                client.close()
+        except ConnectionResetError:
+            print("A client disconnected unexpectedly during login.")
+        except Exception as e:
+            print(f"Error during connection acceptance or login: {e}")
 
 
 # 运行服务器
