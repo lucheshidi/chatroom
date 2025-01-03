@@ -1,6 +1,6 @@
 import socket
 
-SERVER = '127.0.0.1'
+SERVER = '192.168.0.45'
 PORT = 12345
 
 # 初始化客户端
