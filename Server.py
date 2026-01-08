@@ -2,8 +2,8 @@ import socket
 import threading
 
 # 配置服务器
-SERVER = '192.168.0.45'
-PORT = 12345
+SERVER = '127.0.0.1'
+PORT = 90552
 
 # 初始化登录凭证（内存管理）
 LOGIN_CREDENTIALS = {
