@@ -2,8 +2,8 @@ import socket
 import threading
 import time
 
-SERVER = '192.168.0.45'  # 替换为主机的局域网IP地址
-PORT = 12345  # 替换为主机监听的端口号
+SERVER = '127.0.0.1'  # 替换为主机的局域网IP地址
+PORT = 90552  # 替换为主机监听的端口号
 
 # 初始化客户端
 client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
